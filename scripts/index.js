@@ -2,31 +2,37 @@ import Network from "./neural/network.js";
 import Random from "./utilities/random.js";
 import Events from "./events/events.js";
 
-const numNeurons = 4;
+console.log("Creating network...");
+
+const numNeurons = 10;
 const connectivity = 1;
-const transmitterRatio = 0.3;
+const transmitterRatio = 0.8;
 
 const random = new Random(0);
 const network = new Network(random, numNeurons, connectivity, transmitterRatio);
 
-network.on(Events.DEPOLARIZE, (time, data) => {
-  console.log(`Network depolarized`, data);
-});
+const recording = [];
+network
+  .on(Events.DEPOLARIZE, (time, data) => {
+    // console.log(`Network depolarized`);
+  })
+  .on(Events.SPIKE, (time, data) => {
+    // console.log(`Network spiked`);
+    recording.push(time);
+  })
+  .onNeuron(Events.DEPOLARIZE, (time, data) => {
+    // console.log(`Neuron ${data.id} depolarized`, data.voltage);
+  })
+  .onNeuron(Events.SPIKE, (time, data) => {
+    // console.log(`Neuron ${data.id} spiked`);
+  });
 
-network.on(Events.SPIKE, (time, data) => {
-  console.log(`Network spiked`, data);
-});
+console.log("Starting simulation...");
 
-network.onNeuron(Events.DEPOLARIZE, (time, data) => {
-  console.log(`Neuron depolarized`, data);
-});
+const numUpdates = 400;
+for (let i = 0; i < numUpdates; i++) {
+  const randVoltage = Math.floor(random.next(2, 14));
+  network.depolarize(randVoltage);
+}
 
-network.onNeuron(Events.SPIKE, (time, data) => {
-  console.log(`Neuron spiked`, data);
-});
-
-network.depolarize(4);
-network.depolarize(6);
-// network.depolarize(7);
-// network.depolarize(4);
-// network.depolarize(5);
+console.log("Recording:", recording);

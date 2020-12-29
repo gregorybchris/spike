@@ -17,26 +17,36 @@ class Neuron {
 
   on = (event, callback) => {
     this.eventMap.register(event, callback);
+    return this;
   };
 
   depolarize = (voltage) => {
-    this.potential += voltage;
-    if (this.potential >= this.threshold) {
-      this.axons.forEach((axon) => {
-        axon.depolarize(this.potential);
-      });
+    // Make sure neuron is not inhibited beyond resting potential
+    if (this.potential + voltage < this.restingPotential) {
       this.potential = this.restingPotential;
-      this.eventMap.call(Events.SPIKE, getTime(), { id: this.id, potential: this.potential });
+    } else {
+      this.potential += voltage;
     }
+
     this.eventMap.call(Events.DEPOLARIZE, getTime(), { id: this.id, voltage: voltage });
+    if (this.potential >= this.threshold) {
+      const transmittedVoltage = this.potential - this.threshold;
+      this.potential = this.restingPotential;
+      this.eventMap.call(Events.SPIKE, getTime(), { id: this.id });
+      this.axons.forEach((axon) => {
+        axon.depolarize(transmittedVoltage);
+      });
+    }
+    return this;
   };
 
   wire = (neuron, transmitter) => {
     const myelination = this.random.next();
     const axon = new Axon(myelination, transmitter, neuron);
     const myelinPercent = Math.round(myelination * 100, 2);
-    console.log(`Wired ${this.id}->${neuron.id} (${transmitter}, ${myelinPercent}% myelination)`);
+    console.log(`Created axon from ${this.id}->${neuron.id} (${myelinPercent}% myelination, ${transmitter})`);
     this.axons.push(axon);
+    return this;
   };
 }
 
