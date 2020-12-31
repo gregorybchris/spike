@@ -12,5 +12,9 @@ class Random {
 
     return min + rnd * (max - min);
   };
+
+  nextInt = (min, max) => {
+    return Math.floor(this.next(min, max));
+  };
 }
 export default Random;

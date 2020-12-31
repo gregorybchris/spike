@@ -1,10 +1,10 @@
 import Transmitters from "./transmitters.js";
 
 class Axon {
-  constructor(myelination, transmitter, postsynaptic) {
+  constructor(postsynaptic, myelination, transmitter) {
+    this.postsynaptic = postsynaptic;
     this.myelination = myelination;
     this.transmitter = transmitter;
-    this.postsynaptic = postsynaptic;
   }
 
   depolarize = (voltage) => {

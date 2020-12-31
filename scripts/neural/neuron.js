@@ -1,7 +1,7 @@
 import Events from "../events/events.js";
 import EventMap from "../events/event-map.js";
 import Axon from "./axon.js";
-import getTime from "../utilities/timer.js";
+import { getTime } from "../utilities/timing.js";
 
 class Neuron {
   constructor(id, random, threshold = -55, restingPotential = -70, initialPotential = -70) {
@@ -40,13 +40,24 @@ class Neuron {
     return this;
   };
 
-  wire = (neuron, transmitter) => {
-    const myelination = this.random.next();
-    const axon = new Axon(myelination, transmitter, neuron);
-    const myelinPercent = Math.round(myelination * 100, 2);
-    console.log(`Created axon from ${this.id}->${neuron.id} (${myelinPercent}% myelination, ${transmitter})`);
+  synapseTo = (neuron, transmitter) => {
+    const myelination = this.random.next(0, 0.8);
+    const axon = new Axon(neuron, myelination, transmitter);
     this.axons.push(axon);
     return this;
+  };
+
+  hasSynapseTo = (neuron) => {
+    for (let i = 0; i < this.axons.length; i++) {
+      if (this.axons[i].postsynaptic.id == neuron.id) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  mapSynapses = (callback) => {
+    return this.axons.map(callback);
   };
 }
 

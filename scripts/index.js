@@ -1,15 +1,18 @@
 import Network from "./neural/network.js";
-import Random from "./utilities/random.js";
 import Events from "./events/events.js";
+import Random from "./utilities/random.js";
+import { debugNetwork } from "./utilities/debug.js";
 
-console.log("Creating network...");
+const numNeurons = 5;
+const synapticDensity = 40;
+const transmitterRatio = 1;
+const allowMultiSynapse = true;
 
-const numNeurons = 10;
-const connectivity = 1;
-const transmitterRatio = 0.8;
+const randomSeed = 10;
+const random = new Random(randomSeed);
+const network = new Network(random, numNeurons, synapticDensity, transmitterRatio, allowMultiSynapse);
 
-const random = new Random(0);
-const network = new Network(random, numNeurons, connectivity, transmitterRatio);
+debugNetwork(network, false);
 
 const recording = [];
 network
@@ -27,11 +30,9 @@ network
     // console.log(`Neuron ${data.id} spiked`);
   });
 
-console.log("Starting simulation...");
-
-const numUpdates = 400;
+const numUpdates = 200;
 for (let i = 0; i < numUpdates; i++) {
-  const randVoltage = Math.floor(random.next(2, 14));
+  const randVoltage = random.nextInt(2, 14);
   network.depolarize(randVoltage);
 }
 
