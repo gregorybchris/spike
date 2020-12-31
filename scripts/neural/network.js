@@ -50,7 +50,7 @@ class Network {
 
   twoRandomNeurons = () => {
     if (this.neurons.length < 2) {
-      console.error("Network must have at least two neurons");
+      throw "Network must have at least two neurons";
     }
 
     const neuronNumberA = this.random.nextInt(0, this.numNeurons);

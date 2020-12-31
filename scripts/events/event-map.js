@@ -11,7 +11,7 @@ class EventMap {
 
   validateEvent = (event) => {
     if (!Object.values(Events).includes(event)) {
-      console.error(`Event ${event} is not valid`);
+      throw `Event ${event} is not valid`;
     }
   };
 
