@@ -1,6 +1,6 @@
-import Neuron from "../neural/neuron.js";
-import Transmitters from "../neural/transmitters.js";
-import Random from "../random/random.js";
+import Neuron from "../scripts/neural/neuron.js";
+import Transmitters from "../scripts/neural/transmitters.js";
+import Random from "../scripts/random/random.js";
 
 const random = new Random(42);
 

@@ -1,5 +1,5 @@
-import Random from "../random/random.js";
-import LCGImplementations from "../random/lcg-implementations.js";
+import Random from "../scripts/random/random.js";
+import LCGImplementations from "../scripts/random/lcg-implementations.js";
 
 test("number of implementations", () => {
   expect(Object.keys(LCGImplementations).length).toBe(3);
