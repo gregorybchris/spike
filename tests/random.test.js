@@ -2,7 +2,7 @@ import Random from "../scripts/random/random.js";
 import LCGImplementations from "../scripts/random/lcg-implementations.js";
 
 test("number of implementations", () => {
-  expect(Object.keys(LCGImplementations).length).toBe(3);
+  expect(Object.keys(LCGImplementations.PARAMETERS).length).toBe(3);
 });
 
 test.each([
@@ -14,9 +14,9 @@ test.each([
 });
 
 test.each([
-  ["glibc", 0.58230758970603],
-  ["houle", 0.88588391632373],
-  ["java", 0.00376241603037],
+  [LCGImplementations.GLIBC, 0.58230758970603],
+  [LCGImplementations.HOULE, 0.88588391632373],
+  [LCGImplementations.JAVA, 0.00376241603037],
 ])("%s value continuity", (implementation, expected) => {
   const random = new Random(42, implementation);
   expect(random.next()).toBeCloseTo(expected);
@@ -30,7 +30,7 @@ test("invalid implementation", () => {
 
 test("default params", () => {
   const random = new Random(42);
-  expect(random.implementation).toBe("java");
+  expect(random.implementation).toBe(LCGImplementations.JAVA);
 });
 
 test("two seeds different", () => {
@@ -48,7 +48,7 @@ test("two seeds the same", () => {
 });
 
 test("uniform distribution", () => {
-  const random = new Random(25, "java");
+  const random = new Random(25, LCGImplementations.JAVA);
   const min = 0;
   const max = 10;
   const numSamples = 100000;
@@ -73,7 +73,7 @@ test("uniform distribution", () => {
 });
 
 test("normal distribution", () => {
-  const random = new Random(25, "java");
+  const random = new Random(25, LCGImplementations.JAVA);
   const numSamples = 200000;
   const normalCounts = {};
   for (let i = 0; i < numSamples; i++) {
