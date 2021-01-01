@@ -1,6 +1,6 @@
 import Network from "./neural/network.js";
 import Events from "./events/events.js";
-import Random from "./utilities/random.js";
+import Random from "./random/random.js";
 import { debugNetwork } from "./utilities/debug.js";
 
 const numNeurons = 20;
