@@ -1,37 +1,32 @@
-const LCG = {
-  // NOTE: These LCG parameters do not perform optimally on the spectral test
-  // and should not be used for cryptographic applications.
-  // Refer to Steele & Vigna 2020: https://arxiv.org/pdf/2001.05304.pdf
-
-  // The Central Randomizer 1.3 (c) 1997 by Paul Houle (houle@msc.cornell.edu)
-  houle: {
-    mod: 233280,
-    mult: 9301,
-    inc: 49297,
-  },
-
-  // glibc 2.26 (2017)
-  // https://sourceware.org/git/?p=glibc.git;a=blob;f=stdlib/random_r.c;hb=glibc-2.26#l362
-  glibc: {
-    mod: 2147483648,
-    mult: 1103515245,
-    inc: 12345,
-  },
-};
+import LCGImplementations from "../random/lcg-implementations.js";
+import LCGParameters from "../random/lcg-parameters.js";
 
 class Random {
-  constructor(seed) {
+  constructor(seed, implementation = LCGImplementations.JAVA) {
     this.seed = seed === undefined ? new Date().getTime() : seed;
     this.savedNormal = null;
+    this.implementation = implementation;
+
+    this.setParams(implementation);
   }
+
+  setParams = (implementation) => {
+    for (let paramsName in LCGParameters) {
+      const params = LCGParameters[paramsName];
+      if (params.IMPLEMENTATION == implementation) {
+        this.params = params;
+        return;
+      }
+    }
+    throw `Implementation ${implementation} is not valid`;
+  };
 
   next = (min, max) => {
     max = max || 1;
     min = min || 0;
 
-    const params = LCG.houle;
-    this.seed = (this.seed * params.mult + params.inc) % params.mod;
-    return min + (this.seed / params.mod) * (max - min);
+    this.seed = (this.seed * this.params.MULT + this.params.INC) % this.params.MOD;
+    return min + (this.seed / this.params.MOD) * (max - min);
   };
 
   nextInt = (min, max) => {
@@ -60,4 +55,5 @@ class Random {
     return z1;
   };
 }
+
 export default Random;

@@ -1,0 +1,23 @@
+{
+  "name": "spike",
+  "version": "1.0.0",
+  "description": "Spiking neural network",
+  "main": "scripts/index.js",
+  "scripts": {
+    "test": "node --experimental-vm-modules node_modules/.bin/jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gregorybchris/spike.git"
+  },
+  "author": "Chris Gregory",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gregorybchris/spike/issues"
+  },
+  "homepage": "https://github.com/gregorybchris/spike#readme",
+  "devDependencies": {
+    "jest": "^26.6.3"
+  },
+  "type": "module"
+}
