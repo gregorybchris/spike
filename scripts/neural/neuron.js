@@ -8,8 +8,8 @@ class Neuron {
     this.id = id;
     this.random = random;
     this.threshold = threshold;
-    this.potential = initialPotential;
     this.restingPotential = restingPotential;
+    this.potential = initialPotential;
     this.eventMap = new EventMap();
 
     this.axons = [];
