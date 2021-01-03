@@ -3,27 +3,20 @@ import Events from "./events.js";
 class EventMap {
   constructor() {
     this.map = {};
-    for (let eventVar in Events) {
-      const event = Events[eventVar];
+    Events.forEach((event) => {
       this.map[event] = [];
-    }
+    });
   }
 
-  validateEvent = (event) => {
-    if (!Object.values(Events).includes(event)) {
-      throw `Event ${event} is not valid`;
-    }
-  };
-
   call = (event, time, data) => {
-    this.validateEvent(event);
+    Events.validate(event);
     this.map[event].forEach((callback) => {
       callback(time, data);
     });
   };
 
   register = (event, callback) => {
-    this.validateEvent(event);
+    Events.validate(event);
     this.map[event].push(callback);
   };
 }

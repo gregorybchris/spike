@@ -2,6 +2,8 @@ import Transmitters from "./transmitters.js";
 
 class Axon {
   constructor(postsynaptic, myelination, transmitter) {
+    Transmitters.validate(transmitter);
+
     this.postsynaptic = postsynaptic;
     this.myelination = myelination;
     this.transmitter = transmitter;

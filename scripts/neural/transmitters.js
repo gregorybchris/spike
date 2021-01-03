@@ -1,8 +1,8 @@
-const Transmitters = {
+import Enum from "../utilities/enum.js";
+
+const Transmitters = Enum({
   EXCITATORY: "excitatory",
   INHIBITORY: "inhibitory",
-};
-
-Object.freeze(Transmitters);
+});
 
 export default Transmitters;
