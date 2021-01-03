@@ -1,8 +1,10 @@
 import Random from "../scripts/random/random.js";
 import LCGImplementations from "../scripts/random/lcg-implementations.js";
+import LCGParameters from "../scripts/random/lcg-parameters.js";
 
 test("number of implementations", () => {
-  expect(Object.keys(LCGImplementations.PARAMETERS).length).toBe(3);
+  expect(LCGImplementations.size()).toBe(3);
+  expect(Object.keys(LCGParameters.PARAMETERS).length).toBe(3);
 });
 
 test.each([
@@ -25,7 +27,7 @@ test.each([
 test("invalid implementation", () => {
   expect(() => {
     new Random(42, "invalid-implementation");
-  }).toThrowError("Implementation invalid-implementation is not valid");
+  }).toThrowError("Value invalid-implementation is not a valid enum entry");
 });
 
 test("default params", () => {

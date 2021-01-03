@@ -1,11 +1,12 @@
 import LCGImplementations from "../random/lcg-implementations.js";
+import LCGParameters from "../random/lcg-parameters.js";
 
 class Random {
   constructor(seed, implementation = LCGImplementations.JAVA) {
     this.seed = seed === undefined ? new Date().getTime() : seed;
     this.savedNormal = null;
     this.implementation = implementation;
-    this.params = LCGImplementations.getParams(implementation);
+    this.params = LCGParameters.getParams(implementation);
   }
 
   next = (min, max) => {
