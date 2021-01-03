@@ -25,17 +25,13 @@ const Enum = (o, name) => {
     }
   };
 
-  const e = {
+  return Object.freeze({
     size: size,
     has: has,
     forEach: forEach,
     validate: validate,
     ...o,
-  };
-
-  Object.freeze(e);
-
-  return e;
+  });
 };
 
 export default Enum;
